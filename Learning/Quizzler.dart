@@ -31,15 +31,18 @@ class _QuizPageState extends State<QuizPage> {
   List <Icon> scoreKeeper = [ // we have to specify the type of list in order to work correctly
   ];
 
-  List <Text> questions = [
-    Text(
-      "Question 1"
-    ),
+  List <String> questions = [
+    'You can lead a cow down stairs but not up stairs.',
+    'Approximately one quarter of human bones are in the feet.',
+    'A slug\'s blood is green.'
 
-    Text(
-        "Question 2"
-    ),
   ];
+
+  List <bool> answers = [
+    false, true, true
+  ];
+
+  int current_question = 0;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -52,7 +55,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                'This is where the question text will go.',
+                questions[current_question],
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -75,11 +78,25 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 setState(() {
-                  scoreKeeper.add(
+                  if (answers[current_question] == true){
+                    scoreKeeper.add(
+                        Icon(
+                          Icons.check,
+                          color: Colors.tealAccent,
+                        ));
+                  }
+                  else{
+                    scoreKeeper.add(
                       Icon(
-                        Icons.check,
-                        color: Colors.tealAccent,
-                      ));
+                        Icons.close,
+                        color: Colors.redAccent,
+                      ),
+                    );
+                  }
+                  current_question++;
+                  if (current_question > 2){
+                    current_question = 0;
+                  }
                 });
                 //The user picked true.
               },
@@ -100,12 +117,25 @@ class _QuizPageState extends State<QuizPage> {
               onPressed: () {
                 //The user picked false.
                 setState(() {
-                  scoreKeeper.add(
-                    Icon(
-                     Icons.close,
-                     color: Colors.redAccent,
-                    ),
-                  );
+                  if (answers[current_question] == false){
+                    scoreKeeper.add(
+                        Icon(
+                          Icons.check,
+                          color: Colors.tealAccent,
+                        ));
+                  }
+                  else{
+                    scoreKeeper.add(
+                      Icon(
+                        Icons.close,
+                        color: Colors.redAccent,
+                      ),
+                    );
+                  }
+                  current_question++;
+                  if (current_question > 2){
+                    current_question = 0;
+                  }
                 });
               },
             ),
